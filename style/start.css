@@ -1,0 +1,254 @@
+/* ============================
+   START PAGE HEADER
+   ============================ */
+.start-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(159, 122, 234, 0.1));
+    border-radius: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.main-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 25px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 3px solid #4299e1;
+    transition: transform 0.3s ease;
+}
+
+.main-icon:hover {
+    transform: scale(1.05) rotate(5deg);
+}
+
+.icon-caption {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #4a5568;
+    font-style: italic;
+    text-align: center;
+    font-weight: 500;
+}
+
+.greeting-container {
+    flex: 1;
+}
+
+.greeting-title {
+    color: #2d3748;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #4299e1, #9f7aea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.greeting-subtitle {
+    font-size: 18px;
+    color: #718096;
+    margin-bottom: 15px;
+    font-weight: 600;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.greeting-text {
+    color: #4a5568;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    border-left: 4px solid #4299e1;
+}
+
+/* ============================
+   FEATURES SECTION
+   ============================ */
+.start-content {
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.content-title {
+    text-align: center;
+    color: #2d3748;
+    font-size: 32px;
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.content-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #4299e1, #9f7aea);
+    border-radius: 2px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.feature-card {
+    padding: 25px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 4px solid;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-title {
+    color: #2d3748;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.feature-description {
+    color: #718096;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================
+   BENEFITS SECTION
+   ============================ */
+.benefits-section {
+    margin: 50px 0;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.05), rgba(159, 122, 234, 0.05));
+    border-radius: 20px;
+    border: 1px solid rgba(66, 153, 225, 0.1);
+}
+
+.benefits-title {
+    text-align: center;
+    color: #2d3748;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+}
+
+.benefit-item {
+    padding: 15px 20px;
+    background: white;
+    border-radius: 12px;
+    font-weight: 500;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.benefit-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, #4299e1, #3182ce);
+    color: white;
+}
+
+.benefit-item::before {
+    content: '✓';
+    font-weight: bold;
+    color: #48bb78;
+    font-size: 16px;
+}
+
+.benefit-item:hover::before {
+    color: white;
+}
+
+/* ============================
+   CALL TO ACTION
+   ============================ */
+.cta-section {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    border-radius: 20px;
+    color: white;
+    margin-top: 50px;
+}
+
+.cta-text {
+    font-size: 20px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cta-text strong {
+    font-weight: 800;
+}
+
+.start-button {
+    padding: 18px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    background: white;
+    color: #4299e1;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}

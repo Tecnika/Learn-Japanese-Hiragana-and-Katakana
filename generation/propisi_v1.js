@@ -2,51 +2,41 @@ function settings_propisi() {
     let settings = document.querySelector('.setting');
     clear_content(settings);
     
-    // Создаем контейнер настроек
+    // Создаем компактный контейнер настроек
     const settingsContainer = document.createElement('div');
-    settingsContainer.className = 'propisi-settings';
+    settingsContainer.className = 'compact-settings';
     settings.appendChild(settingsContainer);
     
-    // 1. Настройка количества строк
+    // 1. Настройка количества строк (компактная)
     const rowsGroup = document.createElement('div');
-    rowsGroup.className = 'settings-group';
+    rowsGroup.className = 'compact-group';
     
-    const rowsLabel = document.createElement('label');
-    rowsLabel.className = 'settings-label';
-    rowsLabel.textContent = 'Количество строк:';
-    rowsGroup.appendChild(rowsLabel);
-    
-    const sliderContainer = document.createElement('div');
-    sliderContainer.className = 'slider-container';
+    const rowsLabel = document.createElement('div');
+    rowsLabel.className = 'compact-label';
+    rowsLabel.innerHTML = 'Количество строк: <span class="compact-value">30</span>';
     
     const rowsSlider = document.createElement('input');
     rowsSlider.type = 'range';
-    rowsSlider.className = 'settings-slider';
+    rowsSlider.className = 'compact-slider';
     rowsSlider.min = '10';
     rowsSlider.max = '100';
     rowsSlider.value = '30';
-    rowsSlider.step = '1';
-    sliderContainer.appendChild(rowsSlider);
+    rowsSlider.step = '5';
     
-    const rowsValue = document.createElement('span');
-    rowsValue.className = 'settings-value';
-    rowsValue.textContent = '30';
-    sliderContainer.appendChild(rowsValue);
-    
-    rowsGroup.appendChild(sliderContainer);
+    rowsGroup.appendChild(rowsLabel);
+    rowsGroup.appendChild(rowsSlider);
     settingsContainer.appendChild(rowsGroup);
     
-    // 2. Настройка пар в строке
+    // 2. Настройка пар в строке (компактная)
     const pairsGroup = document.createElement('div');
-    pairsGroup.className = 'settings-group';
+    pairsGroup.className = 'compact-group';
     
     const pairsLabel = document.createElement('label');
-    pairsLabel.className = 'settings-label';
+    pairsLabel.className = 'compact-label';
     pairsLabel.textContent = 'Пар в строке:';
-    pairsGroup.appendChild(pairsLabel);
     
     const pairsSelect = document.createElement('select');
-    pairsSelect.className = 'settings-select pairs-select';
+    pairsSelect.className = 'compact-select';
     
     const pairOptions = [2, 3, 4, 5, 6, 7, 8];
     pairOptions.forEach(pair => {
@@ -57,20 +47,20 @@ function settings_propisi() {
         pairsSelect.appendChild(option);
     });
     
+    pairsGroup.appendChild(pairsLabel);
     pairsGroup.appendChild(pairsSelect);
     settingsContainer.appendChild(pairsGroup);
     
-    // 3. Выбор типа каны
+    // 3. Выбор типа каны (компактная)
     const kanaGroup = document.createElement('div');
-    kanaGroup.className = 'settings-group';
+    kanaGroup.className = 'compact-group';
     
     const kanaLabel = document.createElement('label');
-    kanaLabel.className = 'settings-label';
+    kanaLabel.className = 'compact-label';
     kanaLabel.textContent = 'Тип каны:';
-    kanaGroup.appendChild(kanaLabel);
     
     const kanaSelect = document.createElement('select');
-    kanaSelect.className = 'settings-select kana-select';
+    kanaSelect.className = 'compact-select';
     
     const kanaTypes = [
         {value: 'hiragana+katakana', label: 'Хирагана+Катакана'},
@@ -87,30 +77,28 @@ function settings_propisi() {
         kanaSelect.appendChild(option);
     });
     
+    kanaGroup.appendChild(kanaLabel);
     kanaGroup.appendChild(kanaSelect);
     settingsContainer.appendChild(kanaGroup);
     
-    // 4. Настройка категорий
+    // 4. Настройка категорий (компактная)
     const categoriesGroup = document.createElement('div');
-    categoriesGroup.className = 'settings-group categories-group';
+    categoriesGroup.className = 'compact-group compact-categories';
     
     const categoriesLabel = document.createElement('label');
-    categoriesLabel.className = 'settings-label';
-    categoriesLabel.textContent = 'Категории символов:';
+    categoriesLabel.className = 'compact-label';
+    categoriesLabel.textContent = 'Категории:';
     categoriesGroup.appendChild(categoriesLabel);
     
-    const categoriesContainer = document.createElement('div');
-    categoriesContainer.className = 'categories-container';
-    
     const categories = [
-        {id: 'basic', label: 'Базовая', description: 'Только основные символы'},
-        {id: 'extended', label: 'Расширенная', description: 'Основные + дополненные', default: true},
-        {id: 'full', label: 'Полная', description: 'Все символы'}
+        {id: 'basic', label: 'Базовая'},
+        {id: 'extended', label: 'Расширенная', default: true},
+        {id: 'full', label: 'Полная'}
     ];
     
     categories.forEach(cat => {
-        const categoryWrapper = document.createElement('div');
-        categoryWrapper.className = 'category-option';
+        const radioWrapper = document.createElement('div');
+        radioWrapper.className = 'compact-radio';
         
         const radioInput = document.createElement('input');
         radioInput.type = 'radio';
@@ -121,47 +109,32 @@ function settings_propisi() {
         
         const radioLabel = document.createElement('label');
         radioLabel.htmlFor = `cat-${cat.id}`;
-        radioLabel.className = 'category-label';
+        radioLabel.className = 'compact-radio-label';
+        radioLabel.textContent = cat.label;
         
-        const radioSpan = document.createElement('span');
-        radioSpan.className = 'radio-custom';
-        
-        const labelText = document.createElement('span');
-        labelText.className = 'label-text';
-        labelText.textContent = cat.label;
-        
-        const description = document.createElement('span');
-        description.className = 'category-description';
-        description.textContent = cat.description;
-        
-        radioLabel.appendChild(radioSpan);
-        radioLabel.appendChild(labelText);
-        radioLabel.appendChild(description);
-        
-        categoryWrapper.appendChild(radioInput);
-        categoryWrapper.appendChild(radioLabel);
-        categoriesContainer.appendChild(categoryWrapper);
+        radioWrapper.appendChild(radioInput);
+        radioWrapper.appendChild(radioLabel);
+        categoriesGroup.appendChild(radioWrapper);
     });
     
-    categoriesGroup.appendChild(categoriesContainer);
     settingsContainer.appendChild(categoriesGroup);
     
-    // 5. Кнопка генерации
+    // 5. Кнопка генерации (компактная)
     const generateBtn = document.createElement('button');
-    generateBtn.className = 'generate-btn';
+    generateBtn.className = 'compact-generate-btn';
     generateBtn.textContent = 'Сгенерировать прописи';
     settingsContainer.appendChild(generateBtn);
     
     // Обработчики событий
     rowsSlider.addEventListener('input', function() {
-        rowsValue.textContent = this.value;
+        rowsLabel.querySelector('.compact-value').textContent = this.value;
         updatePropisi();
     });
     
     pairsSelect.addEventListener('change', updatePropisi);
     kanaSelect.addEventListener('change', updatePropisi);
     
-    categoriesContainer.querySelectorAll('input[name="category"]').forEach(radio => {
+    categoriesGroup.querySelectorAll('input[name="category"]').forEach(radio => {
         radio.addEventListener('change', updatePropisi);
     });
     
@@ -171,10 +144,11 @@ function settings_propisi() {
     setTimeout(updatePropisi, 100);
 }
 
+// В функции updatePropisi нужно обновить селекторы для работы с компактной версией:
 function updatePropisi() {
-    const rows = document.querySelector('.settings-slider').value;
-    const pairs = document.querySelector('.pairs-select').value;
-    const kanaType = document.querySelector('.kana-select').value;
+    const rows = document.querySelector('.compact-slider').value;
+    const pairs = document.querySelector('.compact-select').value;
+    const kanaType = document.querySelectorAll('.compact-select')[1].value;
     const category = document.querySelector('input[name="category"]:checked').value;
     
     const content = document.querySelector('.content');

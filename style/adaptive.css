@@ -1,0 +1,331 @@
+/* ============================
+   TABLETS (max-width: 768px)
+   ============================ */
+@media (max-width: 768px) {
+    /* Общие стили */
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        width: 100%;
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    /* Меню и кнопки */
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .button {
+        width: 100%;
+        max-width: 300px;
+        margin: 5px 0;
+    }
+    
+    /* Контент */
+    .setting, .content {
+        padding: 20px;
+    }
+    
+    /* Стартовая страница */
+    .start-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .greeting-title {
+        font-size: 24px;
+    }
+    
+    .greeting-subtitle {
+        font-size: 16px;
+    }
+    
+    .content-title {
+        font-size: 26px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .feature-card {
+        padding: 20px;
+    }
+    
+    .benefits-section {
+        padding: 25px;
+    }
+    
+    .benefits-title {
+        font-size: 24px;
+    }
+    
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-section {
+        padding: 30px 20px;
+    }
+    
+    .cta-text {
+        font-size: 18px;
+    }
+    
+    .start-button {
+        padding: 16px 30px;
+        font-size: 16px;
+    }
+    
+    /* Прописи */
+    .propisi-settings,
+    .propisi-container {
+        padding: 20px;
+    }
+    
+    .settings-group {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    .propisi-title {
+        font-size: 24px;
+    }
+    
+    .propisi-meta {
+        gap: 10px;
+    }
+    
+    .meta-item {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .kana-cell,
+    .practice-cell {
+        padding: 20px 15px;
+    }
+    
+    .kana-symbol {
+        font-size: 28px;
+        min-height: 40px;
+    }
+    
+    .table-header {
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    .compact-settings {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 15px;
+    }
+    
+    .compact-generate-btn {
+        margin-top: 0;
+    }
+    
+    /* Таблицы каны */
+    .both-kana-container {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .kana-table-container {
+        max-width: 100%;
+        min-width: 100%;
+        padding: 20px;
+    }
+    
+    .kana-title {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+    
+    /* Таблицы */
+    th, td {
+        padding: 12px 15px;
+    }
+    
+    .symbol {
+        font-size: 24px;
+    }
+    
+    /* Формы */
+    .categories-radio-group {
+        padding: 15px;
+    }
+    
+    .categories-radio-group label {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .category-label {
+        padding: 15px;
+    }
+    
+    .label-text {
+        padding-left: 25px;
+        font-size: 15px;
+    }
+    
+    .category-description {
+        padding-left: 25px;
+        font-size: 12px;
+    }
+}
+
+/* ============================
+   MOBILE PHONES (max-width: 480px)
+   ============================ */
+@media (max-width: 480px) {
+    /* Общие стили */
+    .button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    h3 {
+        font-size: 1.4em !important;
+    }
+    
+    caption {
+        font-size: 1.3em;
+        padding: 15px;
+    }
+    
+    th, td {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    .symbol {
+        font-size: 20px;
+    }
+    
+    select {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    /* Стартовая страница */
+    .greeting-title {
+        font-size: 20px;
+    }
+    
+    .content-title {
+        font-size: 22px;
+    }
+    
+    .feature-card {
+        padding: 15px;
+    }
+    
+    .feature-title {
+        font-size: 18px;
+    }
+    
+    .benefits-title {
+        font-size: 20px;
+    }
+    
+    .cta-text {
+        font-size: 16px;
+    }
+    
+    .main-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    /* Прописи */
+    .propisi-settings,
+    .propisi-container {
+        padding: 15px;
+    }
+    
+    .propisi-title {
+        font-size: 20px;
+    }
+    
+    .propisi-meta {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .kana-symbol {
+        font-size: 24px;
+    }
+    
+    .kana-cell,
+    .practice-cell {
+        padding: 15px 10px;
+    }
+    
+    /* Таблицы каны */
+    .kana-table-container {
+        padding: 15px;
+    }
+    
+    .kana-title {
+        font-size: 1.4em;
+    }
+}
+
+/* ============================
+   LARGE DESKTOPS (min-width: 1200px)
+   ============================ */
+@media (min-width: 1200px) {
+    .both-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .container {
+        width: 98%;
+        padding: 20px;
+    }
+}
+
+/* ============================
+   VERY LARGE SCREENS (min-width: 1400px)
+   ============================ */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ============================
+   HEIGHT ADJUSTMENTS
+   ============================ */
+@media (max-height: 600px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .menu {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
