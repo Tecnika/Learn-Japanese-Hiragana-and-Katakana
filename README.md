@@ -39,7 +39,7 @@ git clone https://github.com/Tecnika/Learn-Japanese-Hiragana-and-Katakana.git
 
 # Переход в директорию проекта
 cd Learn-Japanese-Hiragana-and-Katakana
-
+```
 # Открытие в браузере
 # Просто откройте файл index.html в любом браузере
 
