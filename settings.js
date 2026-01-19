@@ -3,7 +3,7 @@ window.onload = function () {
     let script_names=['table','propisi']
     script_names.forEach(el => {
         let script = document.createElement('script');
-        script.src = '/generation/' + el + '.js';
+        script.src = './generation/' + el + '.js';
         document.head.appendChild(script);
     })
     document.querySelector('#table_btn').onclick = function () {
