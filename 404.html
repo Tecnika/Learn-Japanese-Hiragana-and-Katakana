@@ -1,42 +1,105 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Debug - Missing Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Страница не найдена | Learn Japanese</title>
+    <link rel="stylesheet" href="./style/404.css">
 </head>
 <body>
-    <h1>Отладка путей GitHub Pages</h1>
-    <p>Проверьте загружены ли файлы:</p>
-    <ul id="file-list"></ul>
+    <div class="container">
+        <h1>404</h1>
+        
+        <h2>Страница не найдена</h2>
+        
+        <div class="japanese-text">
+            ページが見つかりません
+        </div>
+        
+        <div class="error-message">
+            Кажется, вы пытаетесь найти страницу, которой не существует.<br>
+            Возможно, она была перемещена или удалена.
+        </div>
+        
+        <!-- Японские символы -->
+        <div class="kana-grid">
+            <div class="kana-char">あ</div>
+            <div class="kana-char">い</div>
+            <div class="kana-char">う</div>
+            <div class="kana-char">え</div>
+            <div class="kana-char">お</div>
+        </div>
+        
+        <!-- Кнопки навигации -->
+        <div class="button-group">
+            <a href="./" class="btn btn-primary">Вернуться на главную</a>
+            <a href="https://github.com/Tecnika/Learn-Japanese-Hiragana-and-Katakana" 
+               class="btn btn-secondary" target="_blank">GitHub репозиторий</a>
+        </div>
+        
+        <!-- Отладочная информация -->
+        <div class="debug-info">
+            <h3>Проверка доступности файлов</h3>
+            <div class="file-status" id="file-status">
+                <!-- Статусы файлов будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </div>
     
     <script>
-        const files = ['table.js', 'propisi.js', 'settings.js'];
-        const list = document.getElementById('file-list');
+        // Проверка доступности файлов
+        const files = [
+            { name: 'index.html', path: './' },
+            { name: 'Основные скрипты', path: 'settings.js' },
+            { name: 'Таблицы каны', path: 'generation/table.js' },
+            { name: 'Прописи', path: 'generation/propisi.js' },
+            { name: 'Основные стили', path: 'style/default.css' }
+        ];
+        
+        const fileStatus = document.getElementById('file-status');
         
         files.forEach(file => {
-            const li = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = file;
-            link.textContent = file;
-            link.target = '_blank';
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            const statusIcon = document.createElement('span');
+            statusIcon.className = 'status-icon';
+            statusIcon.textContent = '⏳';
+            
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            
+            fileItem.appendChild(statusIcon);
+            fileItem.appendChild(fileName);
+            fileStatus.appendChild(fileItem);
             
             // Проверяем доступность файла
-            fetch(file)
+            fetch(file.path)
                 .then(response => {
                     if (response.ok) {
-                        li.style.color = 'green';
-                        li.textContent = `✅ ${file} - OK`;
+                        statusIcon.textContent = '✅';
+                        fileItem.classList.add('ok');
                     } else {
-                        li.style.color = 'red';
-                        li.textContent = `❌ ${file} - ${response.status}`;
+                        statusIcon.textContent = '❌';
+                        fileItem.classList.add('error');
+                        fileName.textContent += ` (${response.status})`;
                     }
                 })
                 .catch(error => {
-                    li.style.color = 'red';
-                    li.textContent = `❌ ${file} - ${error.message}`;
+                    statusIcon.textContent = '❌';
+                    fileItem.classList.add('error');
+                    fileName.textContent += ` (Ошибка)`;
                 });
-            
-            list.appendChild(li);
         });
+        
+        // Добавляем текущий URL для отладки
+        const debugInfo = document.createElement('p');
+        debugInfo.style.marginTop = '15px';
+        debugInfo.style.fontSize = '0.8rem';
+        debugInfo.style.color = '#a0aec0';
+        debugInfo.textContent = `Текущий путь: ${window.location.pathname}`;
+        document.querySelector('.debug-info').appendChild(debugInfo);
     </script>
 </body>
 </html>

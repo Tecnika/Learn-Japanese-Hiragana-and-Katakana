@@ -1,26 +1,6 @@
-// Загрузка CSS для прописей
-function loadPropisiCSS() {
-    if (!document.querySelector('link[href*="propisi.css"]')) {
-        const propisiCSS = document.createElement('link');
-        propisiCSS.rel = 'stylesheet';
-        propisiCSS.href = 'style/propisi.css';
-        document.head.appendChild(propisiCSS);
-    }
-    
-    if (!document.querySelector('link[href*="adaptive.css"]')) {
-        const adaptiveCSS = document.createElement('link');
-        adaptiveCSS.rel = 'stylesheet';
-        adaptiveCSS.href = 'style/adaptive.css';
-        document.head.appendChild(adaptiveCSS);
-    }
-}
-
 function settings_propisi() {
     let settings = document.querySelector('.setting');
     clear_content(settings);
-    
-    // Загружаем CSS для прописей
-    loadPropisiCSS();
     
     // Создаем компактный контейнер настроек
     const settingsContainer = document.createElement('div');
@@ -148,21 +128,28 @@ function settings_propisi() {
     // Обработчики событий
     rowsSlider.addEventListener('input', function() {
         rowsLabel.querySelector('.compact-value').textContent = this.value;
-    });
-    
-    generateBtn.addEventListener('click', () => {
         updatePropisi();
     });
+    
+    pairsSelect.addEventListener('change', updatePropisi);
+    kanaSelect.addEventListener('change', updatePropisi);
+    
+    categoriesGroup.querySelectorAll('input[name="category"]').forEach(radio => {
+        radio.addEventListener('change', updatePropisi);
+    });
+    
+    generateBtn.addEventListener('click', updatePropisi);
     
     // Начальная генерация
     setTimeout(updatePropisi, 100);
 }
 
+// В функции updatePropisi нужно обновить селекторы для работы с компактной версией:
 function updatePropisi() {
-    const rows = document.querySelector('.compact-slider')?.value || 30;
-    const pairs = document.querySelector('.compact-select')?.value || 5;
-    const kanaType = document.querySelectorAll('.compact-select')[1]?.value || 'hiragana+katakana';
-    const category = document.querySelector('input[name="category"]:checked')?.value || 'extended';
+    const rows = document.querySelector('.compact-slider').value;
+    const pairs = document.querySelector('.compact-select').value;
+    const kanaType = document.querySelectorAll('.compact-select')[1].value;
+    const category = document.querySelector('input[name="category"]:checked').value;
     
     const content = document.querySelector('.content');
     clear_content(content);
@@ -376,12 +363,4 @@ function shuffleArray(array) {
 
 function generator_propisi() {
     settings_propisi();
-}
-
-function clear_content(element) {
-    if (element) {
-        while (element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
-    }
 }
