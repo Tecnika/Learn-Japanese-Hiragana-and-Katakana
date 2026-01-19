@@ -5,7 +5,7 @@
 🌐 **Живая версия**: [https://tecnika.github.io/Learn-Japanese-Hiragana-and-Katakana/](https://tecnika.github.io/Learn-Japanese-Hiragana-and-Katakana/)
 
 ![Статус](https://img.shields.io/badge/Статус-В_разработке-orange?style=for-the-badge)
-![Версия](https://img.shields.io/badge/Версия-1.0-blue?style=for-the-badge)
+![Версия](https://img.shields.io/badge/Версия-2.0-blue?style=for-the-badge)
 
 ## ✨ Текущий функционал
 
