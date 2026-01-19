@@ -1,3 +1,9 @@
+console.log('=== GitHub Pages Debug ===');
+console.log('URL:', window.location.href);
+console.log('Pathname:', window.location.pathname);
+console.log('Host:', window.location.host);
+console.log('Ищет файлы относительно:', window.location.origin + window.location.pathname);
+
 window.onload = function () {
     let point = document.querySelector('#JS_settings');
     let script_names=['table','propisi']
