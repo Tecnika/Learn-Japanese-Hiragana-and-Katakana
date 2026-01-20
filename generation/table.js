@@ -98,7 +98,24 @@ function createBothTablesSideBySide() {
     // Добавляем в основной контент
     content.appendChild(container);
 }
+function create_table(kana, skip = false) {
+    let content = document.querySelector('.content');
+    if (!skip) {
+        clear_content(content)
+    }
+    // Adding the entire table to the body tag
 
+    let i = 0;
+    for (let prop in kana) {
+        let table = document.createElement('table');
+        let tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+        create_header(table, i);
+        create_subtable(tbody, kana, prop);
+        i++;
+        content.appendChild(table);
+    }
+}
 // Функция для создания таблицы внутри контейнера
 function create_table_in_container(kana, container) {
     let i = 0;
