@@ -86,7 +86,7 @@ function create_start_page(){
     iconContainer.className = 'icon-container';
     
     let icon = document.createElement('img');
-    icon.src = './favicon.ico';
+    icon.src = './img/favicon.ico';
     icon.alt = 'Learn Nihongo desu~';
     icon.className = 'main-icon';
     
