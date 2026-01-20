@@ -1,15 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Страница не найдена | Learn Japanese</title>
-    <link rel="stylesheet" href="./style/404.css">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="style/404.css">
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+    
+    <!-- Загружаем константы каны -->
+    <script src="const.js"></script>
+        <!-- Скрипт для генерации flip-карточек -->
+    <script src="generation/404-kana.js"></script>
+    
+        <!-- Скрипт для генерации flip-карточек -->
+    <script src="generation/404-click-fix.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>404</h1>
+        <h1 class="err404">404</h1>
         
         <h2>Страница не найдена</h2>
         
@@ -22,13 +32,27 @@
             Возможно, она была перемещена или удалена.
         </div>
         
-        <!-- Японские символы -->
-        <div class="kana-grid">
-            <div class="kana-char">あ</div>
-            <div class="kana-char">い</div>
-            <div class="kana-char">う</div>
-            <div class="kana-char">え</div>
-            <div class="kana-char">お</div>
+        <!-- Секция с flip-карточками каны -->
+        <div class="kana-section">
+            <h3>Тренируйте японскую кану:</h3>
+            <p style="color: #718096; margin-bottom: 25px; line-height: 1.6;">
+                Кликните на карточку, чтобы перевернуть её и увидеть перевод.<br>
+                <small style="font-size: 0.9rem; opacity: 0.8;">Синие — хирагана, красные — катакана</small>
+            </p>
+            
+            <!-- Сетка для flip-карточек -->
+            <div class="random-kana-grid" id="random-kana-grid">
+                <!-- Карточки будут добавлены автоматически -->
+                <div class="loading-message">
+                    <div class="loading-spinner"></div>
+                    <p>Загрузка карточек...</p>
+                </div>
+            </div>
+            
+            <!-- Кнопка обновления -->
+            <button class="refresh-kana-btn" onclick="generateRandomKana(); flipAllCardsBack();">
+                <!-- Текст добавляется через CSS псевдоэлемент -->
+            </button>
         </div>
         
         <!-- Кнопки навигации -->
@@ -47,13 +71,16 @@
         </div>
     </div>
     
+
+    
+    <!-- Скрипт для проверки файлов -->
     <script>
         // Проверка доступности файлов
         const files = [
-            { name: 'index.html', path: './' },
-            { name: 'Основные скрипты', path: 'settings.js' },
-            { name: 'Таблицы каны', path: 'generation/table.js' },
-            { name: 'Прописи', path: 'generation/propisi.js' },
+            { name: 'Главная страница', path: './' },
+            { name: 'Константы каны', path: 'const.js' },
+            { name: 'Стили 404', path: 'style/404.css' },
+            { name: 'Генератор карточек', path: 'generation/404-kana.js' },
             { name: 'Основные стили', path: 'style/default.css' }
         ];
         
@@ -75,7 +102,7 @@
             fileStatus.appendChild(fileItem);
             
             // Проверяем доступность файла
-            fetch(file.path)
+            fetch(file.path, { method: 'HEAD' })
                 .then(response => {
                     if (response.ok) {
                         statusIcon.textContent = '✅';
@@ -89,7 +116,7 @@
                 .catch(error => {
                     statusIcon.textContent = '❌';
                     fileItem.classList.add('error');
-                    fileName.textContent += ` (Ошибка)`;
+                    fileName.textContent += ` (Ошибка загрузки)`;
                 });
         });
         
