@@ -2,48 +2,22 @@ function settings_propisi() {
     let settings = document.querySelector('.setting');
     clear_content(settings);
     
-    // Создаем компактный контейнер настроек в стиле таблиц
+    // Создаем компактный контейнер настроек
     const settingsContainer = document.createElement('div');
     settingsContainer.className = 'compact-settings';
-    
-    // Заголовок и быстрые действия
-    const headerRow = document.createElement('div');
-    headerRow.style.cssText = 'grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;';
-    
-    const title = document.createElement('h3');
-    title.textContent = 'Настройки прописей';
-    title.style.cssText = 'margin: 0; font-size: 16px; color: #2d3748;';
-    
-    const quickActions = document.createElement('div');
-    quickActions.style.cssText = 'display: flex; gap: 8px;';
-    
-    // Быстрые кнопки для количества пар
-    const pairButtons = [2, 4, 6, 8];
-    pairButtons.forEach(pairs => {
-        const quickBtn = document.createElement('button');
-        quickBtn.type = 'button';
-        quickBtn.textContent = `${pairs} пар`;
-        quickBtn.dataset.pairs = pairs;
-        quickBtn.style.cssText = 'padding: 6px 10px; font-size: 13px; border: 1px solid #cbd5e0; border-radius: 6px; background: white; color: #4a5568; cursor: pointer; transition: all 0.2s;';
-        quickActions.appendChild(quickBtn);
-    });
-    
-    headerRow.appendChild(title);
-    headerRow.appendChild(quickActions);
-    settingsContainer.appendChild(headerRow);
-    
-    // Основные настройки в компактной сетке
-    const gridSettings = document.createElement('div');
-    gridSettings.style.cssText = 'grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;';
-    
-    // 1. Количество строк
+    settings.appendChild(settingsContainer);
+    // Добавьте заголовок (как в таблицах)
+    const settingsTitle = document.createElement('h3');
+    settingsTitle.textContent = 'Настройки прописей';
+    settingsTitle.style.cssText = 'grid-column: 1 / -1; text-align: center; color: #2d3748; margin-bottom: 15px;';
+    settingsContainer.insertBefore(settingsTitle, settingsContainer.firstChild);
+    // 1. Настройка количества строк (компактная)
     const rowsGroup = document.createElement('div');
     rowsGroup.className = 'compact-group';
-    rowsGroup.style.cssText = 'margin: 0;';
     
     const rowsLabel = document.createElement('div');
     rowsLabel.className = 'compact-label';
-    rowsLabel.innerHTML = 'Строки: <span class="compact-value">30</span>';
+    rowsLabel.innerHTML = 'Количество строк: <span class="compact-value">30</span>';
     
     const rowsSlider = document.createElement('input');
     rowsSlider.type = 'range';
@@ -55,20 +29,18 @@ function settings_propisi() {
     
     rowsGroup.appendChild(rowsLabel);
     rowsGroup.appendChild(rowsSlider);
+    settingsContainer.appendChild(rowsGroup);
     
-    // 2. Пары в строке (с быстрыми кнопками)
+    // 2. Настройка пар в строке (компактная)
     const pairsGroup = document.createElement('div');
     pairsGroup.className = 'compact-group';
-    pairsGroup.style.cssText = 'margin: 0;';
     
     const pairsLabel = document.createElement('label');
     pairsLabel.className = 'compact-label';
     pairsLabel.textContent = 'Пар в строке:';
-    pairsLabel.style.cssText = 'display: block; margin-bottom: 8px;';
     
     const pairsSelect = document.createElement('select');
     pairsSelect.className = 'compact-select';
-    pairsSelect.style.cssText = 'width: 100%;';
     
     const pairOptions = [2, 3, 4, 5, 6, 7, 8];
     pairOptions.forEach(pair => {
@@ -81,20 +53,18 @@ function settings_propisi() {
     
     pairsGroup.appendChild(pairsLabel);
     pairsGroup.appendChild(pairsSelect);
+    settingsContainer.appendChild(pairsGroup);
     
-    // 3. Тип каны
+    // 3. Выбор типа каны (компактная)
     const kanaGroup = document.createElement('div');
     kanaGroup.className = 'compact-group';
-    kanaGroup.style.cssText = 'margin: 0;';
     
     const kanaLabel = document.createElement('label');
     kanaLabel.className = 'compact-label';
     kanaLabel.textContent = 'Тип каны:';
-    kanaLabel.style.cssText = 'display: block; margin-bottom: 8px;';
     
     const kanaSelect = document.createElement('select');
     kanaSelect.className = 'compact-select';
-    kanaSelect.style.cssText = 'width: 100%;';
     
     const kanaTypes = [
         {value: 'hiragana+katakana', label: 'Хирагана+Катакана'},
@@ -113,20 +83,16 @@ function settings_propisi() {
     
     kanaGroup.appendChild(kanaLabel);
     kanaGroup.appendChild(kanaSelect);
+    settingsContainer.appendChild(kanaGroup);
     
-    // 4. Категории
+    // 4. Настройка категорий (компактная)
     const categoriesGroup = document.createElement('div');
     categoriesGroup.className = 'compact-group compact-categories';
-    categoriesGroup.style.cssText = 'margin: 0; grid-column: span 2;';
     
     const categoriesLabel = document.createElement('label');
     categoriesLabel.className = 'compact-label';
     categoriesLabel.textContent = 'Категории:';
-    categoriesLabel.style.cssText = 'display: block; margin-bottom: 8px;';
     categoriesGroup.appendChild(categoriesLabel);
-    
-    const categoriesRadioGroup = document.createElement('div');
-    categoriesRadioGroup.style.cssText = 'display: flex; gap: 15px; flex-wrap: wrap;';
     
     const categories = [
         {id: 'basic', label: 'Базовая'},
@@ -135,8 +101,8 @@ function settings_propisi() {
     ];
     
     categories.forEach(cat => {
-        const radioContainer = document.createElement('div');
-        radioContainer.style.cssText = 'display: flex; align-items: center; gap: 6px;';
+        const radioWrapper = document.createElement('div');
+        radioWrapper.className = 'compact-radio';
         
         const radioInput = document.createElement('input');
         radioInput.type = 'radio';
@@ -147,67 +113,38 @@ function settings_propisi() {
         
         const radioLabel = document.createElement('label');
         radioLabel.htmlFor = `cat-${cat.id}`;
+        radioLabel.className = 'compact-radio-label';
         radioLabel.textContent = cat.label;
-        radioLabel.style.cssText = 'font-size: 14px; color: #4a5568; cursor: pointer;';
         
-        radioContainer.appendChild(radioInput);
-        radioContainer.appendChild(radioLabel);
-        categoriesRadioGroup.appendChild(radioContainer);
+        radioWrapper.appendChild(radioInput);
+        radioWrapper.appendChild(radioLabel);
+        categoriesGroup.appendChild(radioWrapper);
     });
     
-    categoriesGroup.appendChild(categoriesRadioGroup);
+    settingsContainer.appendChild(categoriesGroup);
     
-    // Добавляем все группы в сетку
-    gridSettings.appendChild(rowsGroup);
-    gridSettings.appendChild(pairsGroup);
-    gridSettings.appendChild(kanaGroup);
-    gridSettings.appendChild(categoriesGroup);
-    settingsContainer.appendChild(gridSettings);
-    
-    // Кнопка генерации
+    // 5. Кнопка генерации (компактная)
     const generateBtn = document.createElement('button');
     generateBtn.className = 'compact-generate-btn';
     generateBtn.textContent = 'Сгенерировать прописи';
-    generateBtn.style.cssText = 'grid-column: 1 / -1; margin-top: 15px;';
     settingsContainer.appendChild(generateBtn);
-    
-    settings.appendChild(settingsContainer);
     
     // Обработчики событий
     rowsSlider.addEventListener('input', function() {
         rowsLabel.querySelector('.compact-value').textContent = this.value;
+        updatePropisi();
     });
     
-    // Быстрые кнопки для пар
-    quickActions.querySelectorAll('button[data-pairs]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const pairsValue = this.dataset.pairs;
-            pairsSelect.value = pairsValue;
-            updatePropisi();
-        });
-    });
-    
-    // Общий обработчик для всех изменений
-    const updatePropisi = () => {
-        const rows = rowsSlider.value;
-        const pairs = pairsSelect.value;
-        const kanaType = kanaSelect.value;
-        const category = document.querySelector('input[name="category"]:checked').value;
-        
-        // Вызываем существующую функцию
-        window.updatePropisi(rows, pairs, kanaType, category);
-    };
-    
-    // Привязываем обработчики
     pairsSelect.addEventListener('change', updatePropisi);
     kanaSelect.addEventListener('change', updatePropisi);
-    categoriesRadioGroup.querySelectorAll('input[name="category"]').forEach(radio => {
+    
+    categoriesGroup.querySelectorAll('input[name="category"]').forEach(radio => {
         radio.addEventListener('change', updatePropisi);
     });
-    generateBtn.addEventListener('click', updatePropisi);
-    rowsSlider.addEventListener('change', updatePropisi);
     
-    // Первоначальная генерация
+    generateBtn.addEventListener('click', updatePropisi);
+    
+    // Начальная генерация
     setTimeout(updatePropisi, 100);
 }
 
@@ -273,7 +210,7 @@ function updatePropisi() {
         kanaTh.className = 'table-header';
         
         const practiceTh = document.createElement('th');
-        practiceTh.textContent = 'Ввод';
+        practiceTh.textContent = 'Пропись';
         practiceTh.className = 'table-header practice-header';
         
         headerRow.appendChild(kanaTh);

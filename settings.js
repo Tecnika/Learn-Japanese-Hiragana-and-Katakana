@@ -191,7 +191,7 @@ function initNavigation() {
 function loadAllStyles() {
     console.log('Загрузка всех стилей...');
     
-    const style_names = ['default', 'start', 'propisi', 'adaptive'];
+    const style_names = ['default', 'start', 'propisi', 'adaptive', 'table'];
     
     style_names.forEach(style => {
         const link = document.createElement('link');
