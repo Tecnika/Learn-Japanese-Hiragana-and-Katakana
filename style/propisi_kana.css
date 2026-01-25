@@ -930,3 +930,277 @@
         align-items: flex-start;
     }
 }
+/* ===== КОМПАКТНАЯ ГОРИЗОНТАЛЬНАЯ КЛАВИАТУРА КАНЫ ===== */
+.compact-kana-grid {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Контейнер для горизонтального расположения строк как столбцов */
+.kana-rows-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 столбцов по умолчанию */
+    gap: 8px;
+}
+
+/* Отдельная строка каны (превращенная в столбец) */
+.kana-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 45px;
+}
+
+/* Номер строки (теперь вертикальный заголовок) */
+.row-number {
+    width: 30px;
+    height: 25px;
+    font-size: 12px;
+    color: #718096 !important;
+    font-weight: bold;
+    text-align: center;
+    background: #edf2f7;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+}
+
+/* Кнопки символов (теперь вертикальные) */
+.compact-key {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'MS Mincho', 'SimSun', serif;
+    color: #2d3748 !important;
+    margin: 0;
+    padding: 0;
+}
+
+.compact-key:hover {
+    background: #edf2f7;
+    border-color: #a0aec0;
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compact-key.selected {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white !important;
+    border-color: #3182ce;
+    box-shadow: 0 2px 6px rgba(66, 153, 225, 0.3);
+}
+
+.compact-key.selected:hover {
+    background: linear-gradient(135deg, #3182ce, #2c5282);
+    border-color: #2c5282;
+}
+
+/* Пустые ячейки для выравнивания */
+.empty-cell {
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Заголовки для столбцов (теперь это номера строк) */
+.column-header {
+    font-size: 12px;
+    color: #718096 !important;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 0;
+    background: #f7fafc;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Контейнер для клавиатуры */
+.kana-keyboard-container {
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.kana-keyboard {
+    overflow-x: auto;
+    padding: 10px;
+}
+
+/* Информационная панель */
+.selection-info {
+    font-size: 14px;
+    color: #718096 !important;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+/* Управление выбором */
+.selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.selection-header h4 {
+    margin: 0;
+    color: #2d3748 !important;
+    font-size: 18px;
+}
+
+.selection-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.control-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.control-btn.select-all {
+    background: #4299e1;
+    color: white !important;
+}
+
+.control-btn.deselect-all {
+    background: #e53e3e;
+    color: white !important;
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected-count {
+    font-size: 14px;
+    color: #2d3748 !important;
+    font-weight: 500;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .kana-rows-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 столбца на планшетах */
+        gap: 6px;
+    }
+    
+    .compact-key {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .empty-cell {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .row-number {
+        width: 25px;
+        height: 20px;
+        font-size: 10px;
+    }
+    
+    .selection-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .selection-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .control-btn {
+        flex: 1;
+        text-align: center;
+    }
+    
+    .selected-count {
+        flex: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .kana-rows-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 столбца на телефонах */
+        gap: 4px;
+    }
+    
+    .compact-key {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .empty-cell {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .row-number {
+        width: 20px;
+        height: 16px;
+        font-size: 9px;
+    }
+    
+    .kana-keyboard-container {
+        padding: 10px;
+    }
+    
+    .compact-kana-grid {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .kana-rows-container {
+        grid-template-columns: repeat(10, 1fr); /* 10 столбцов на больших экранах */
+    }
+}

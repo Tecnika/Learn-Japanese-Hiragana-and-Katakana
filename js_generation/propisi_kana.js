@@ -1,4 +1,4 @@
-// js_generation/propisi_kana.js - Горизонтальный компактный формат
+// js_generation/propisi_kana.js - Прописи каны для практики письма
 
 // Настройки по умолчанию
 const PROPISI_KANA_SETTINGS = {
@@ -8,36 +8,113 @@ const PROPISI_KANA_SETTINGS = {
     showHints: true,
     showSample: true,
     selectedSymbols: [],
-    tableMode: 'compact' // Новая настройка
+    tableMode: 'compact'
 };
 
 /**
- * Получение символов, отсортированных по строкам (горизонтальный формат)
- * @param {string} kanaType - 'hiragana' или 'katakana'
- * @returns {Array} - Массив символов в порядке строк
+ * Получение данных таблицы каны в правильном формате
  */
-function getSymbolsSortedByRows(kanaType) {
+function getKanaTableData(kanaType) {
     const data = kanaType === 'hiragana' ? hiragana.main : katakana.main;
     
+    // Проверяем и очищаем данные
     if (!data || !data.length) return [];
     
-    const symbols = [];
+    const cleanedData = [];
+    data.forEach(row => {
+        const cleanedRow = row.filter(cell => cell && cell.trim() !== '');
+        if (cleanedRow.length > 0) {
+            cleanedData.push(cleanedRow);
+        }
+    });
     
-    // Собираем символы по строкам (горизонтально)
-    for (let row = 0; row < data.length; row++) {
-        for (let col = 0; col < data[row].length; col++) {
-            const symbol = data[row] && data[row][col];
-            if (symbol && symbol.trim() !== '') {
-                symbols.push(symbol);
+    return cleanedData;
+}
+
+/**
+ * Получение транскрипции для символа
+ */
+function getTranscriptionForSymbol(symbol, kanaType) {
+    const dataType = kanaType === 'hiragana' ? Kana_ru : Kana_ru;
+    const data = dataType.main || [];
+    
+    for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+            if (data[i][j] === symbol || 
+                data[i][j] === symbol.toUpperCase() || 
+                data[i][j] === symbol.toLowerCase()) {
+                return {
+                    ru: data[i][j] || symbol,
+                    en: kanaType === 'hiragana' ? 
+                        (Kana_en?.main?.[i]?.[j] || symbol) : 
+                        (Kana_en?.main?.[i]?.[j] || symbol)
+                };
             }
         }
     }
     
-    return symbols;
+    return { ru: symbol, en: symbol };
 }
 
 /**
- * Создание компактной горизонтальной клавиатуры
+ * Получение SVG-пути для символа
+ */
+function getSvgPathForSymbol(symbol, kanaType) {
+    // Простая реализация - если нужны реальные SVG, их нужно добавить в папки
+    return null;
+}
+
+/**
+ * Выбор всех символов
+ */
+function selectAllSymbols() {
+    const kanaType = document.getElementById('propisi-kana-type-select').value;
+    const data = getKanaTableData(kanaType);
+    
+    PROPISI_KANA_SETTINGS.selectedSymbols = [];
+    
+    data.forEach(row => {
+        row.forEach(symbol => {
+            if (symbol && symbol.trim() !== '') {
+                PROPISI_KANA_SETTINGS.selectedSymbols.push(symbol);
+            }
+        });
+    });
+    
+    // Обновляем визуальное состояние
+    document.querySelectorAll('.kana-key.compact-key').forEach(key => {
+        key.classList.add('selected');
+    });
+    
+    updateSelectedCount();
+}
+
+/**
+ * Снятие выбора со всех символов
+ */
+function deselectAllSymbols() {
+    PROPISI_KANA_SETTINGS.selectedSymbols = [];
+    
+    // Обновляем визуальное состояние
+    document.querySelectorAll('.kana-key.compact-key').forEach(key => {
+        key.classList.remove('selected');
+    });
+    
+    updateSelectedCount();
+}
+
+/**
+ * Обновление счетчика выбранных символов
+ */
+function updateSelectedCount() {
+    const selectedCount = document.querySelector('.selected-count');
+    if (selectedCount) {
+        selectedCount.textContent = `Выбрано: ${PROPISI_KANA_SETTINGS.selectedSymbols.length}`;
+    }
+}
+
+/**
+ * Создание компактной ВЕРТИКАЛЬНОЙ клавиатуры каны (строки как столбцы)
  */
 function createCompactHorizontalKeyboard() {
     const keyboard = document.getElementById('kana-keyboard');
@@ -45,34 +122,26 @@ function createCompactHorizontalKeyboard() {
     
     clear_content(keyboard);
     
-    const kanaType = document.getElementById('propisi-kana-type-select').value;
+    const kanaType = document.getElementById('propisi-kana-type-select')?.value || PROPISI_KANA_SETTINGS.kanaType;
     const data = getKanaTableData(kanaType);
     
-    if (!data || !data.length) {
+    if (!data || data.length === 0) {
         const errorMsg = createElement('p', {
             textContent: 'Не удалось загрузить данные каны',
-            style: 'color: #e53e3e; text-align: center;'
+            style: 'color: #e53e3e; text-align: center; padding: 10px;'
         });
         keyboard.appendChild(errorMsg);
         return;
     }
     
-    const container = createElement('div', {
-        className: 'compact-kana-grid'
-    });
+    // Сохраняем текущие выбранные символы
+    const currentSelections = [...PROPISI_KANA_SETTINGS.selectedSymbols];
     
-    // Создаем строки с символами
+    // Создаем строки (теперь как столбцы)
     data.forEach((row, rowIndex) => {
         const rowDiv = createElement('div', {
             className: 'kana-row'
         });
-        
-        // Добавляем номер строки
-        const rowNumber = createElement('div', {
-            className: 'row-number',
-            textContent: rowIndex + 1
-        });
-        rowDiv.appendChild(rowNumber);
         
         // Добавляем символы
         row.forEach((symbol, colIndex) => {
@@ -80,19 +149,29 @@ function createCompactHorizontalKeyboard() {
                 const key = createElement('button', {
                     className: 'kana-key compact-key',
                     textContent: symbol,
-                    dataset: { symbol: symbol, row: rowIndex, col: colIndex },
-                    title: getTranscriptionForSymbol(symbol, kanaType).ru || symbol
+                    dataset: { 
+                        symbol: symbol, 
+                        row: rowIndex, 
+                        col: colIndex 
+                    },
+                    title: `${symbol} (${getTranscriptionForSymbol(symbol, kanaType).ru})`
                 });
                 
                 // Проверяем, выбран ли символ
-                if (PROPISI_KANA_SETTINGS.selectedSymbols.includes(symbol)) {
+                if (currentSelections.includes(symbol)) {
                     key.classList.add('selected');
+                    if (!PROPISI_KANA_SETTINGS.selectedSymbols.includes(symbol)) {
+                        PROPISI_KANA_SETTINGS.selectedSymbols.push(symbol);
+                    }
                 }
                 
                 key.addEventListener('click', function() {
+                    const symbol = this.dataset.symbol;
+                    
+                    // Переключаем класс
                     this.classList.toggle('selected');
                     
-                    const symbol = this.dataset.symbol;
+                    // Обновляем массив выбранных символов
                     if (this.classList.contains('selected')) {
                         if (!PROPISI_KANA_SETTINGS.selectedSymbols.includes(symbol)) {
                             PROPISI_KANA_SETTINGS.selectedSymbols.push(symbol);
@@ -105,7 +184,6 @@ function createCompactHorizontalKeyboard() {
                     }
                     
                     updateSelectedCount();
-                    updatePropisiKana();
                 });
                 
                 rowDiv.appendChild(key);
@@ -118,13 +196,11 @@ function createCompactHorizontalKeyboard() {
             }
         });
         
-        container.appendChild(rowDiv);
+        keyboard.appendChild(rowDiv);
     });
     
-    keyboard.appendChild(container);
-    
     // Выбираем первую строку по умолчанию, если ничего не выбрано
-    if (PROPISI_KANA_SETTINGS.selectedSymbols.length === 0) {
+    if (PROPISI_KANA_SETTINGS.selectedSymbols.length === 0 && data.length > 0) {
         selectFirstRow(kanaType, data);
     }
     
@@ -139,11 +215,7 @@ function selectFirstRow(kanaType, data) {
     
     // Выбираем первую строку
     const firstRow = data[0];
-    firstRow.forEach(symbol => {
-        if (symbol && symbol.trim() !== '' && !PROPISI_KANA_SETTINGS.selectedSymbols.includes(symbol)) {
-            PROPISI_KANA_SETTINGS.selectedSymbols.push(symbol);
-        }
-    });
+    PROPISI_KANA_SETTINGS.selectedSymbols = [...firstRow.filter(s => s && s.trim() !== '')];
     
     // Обновляем визуальное состояние клавиш
     setTimeout(() => {
@@ -152,11 +224,12 @@ function selectFirstRow(kanaType, data) {
                 key.classList.add('selected');
             }
         });
+        updateSelectedCount();
     }, 100);
 }
 
 /**
- * Основная функция настройки с компактным дизайном
+ * Основная функция настройки с ИНТЕГРИРОВАННЫМ выбором символов
  */
 function settings_propisi_kana() {
     let settings = document.querySelector('.setting');
@@ -223,7 +296,7 @@ function settings_propisi_kana() {
     
     const rowsLabel = createElement('label', {
         htmlFor: 'propisi-kana-rows-select',
-        textContent: 'Строки:'
+        textContent: 'Столбцы:'
     });
     
     const rowsSelect = createElement('select', {
@@ -251,7 +324,7 @@ function settings_propisi_kana() {
     
     const columnsLabel = createElement('label', {
         htmlFor: 'propisi-kana-columns-select',
-        textContent: 'Столбцы:'
+        textContent: 'Строки:'
     });
     
     const columnsSelect = createElement('select', {
@@ -311,96 +384,44 @@ function settings_propisi_kana() {
     
     settingsContainer.appendChild(settingsRow);
     
-    // Кнопка генерации
-    const generateBtn = createElement('button', {
-        id: 'propisi-kana-generate-btn',
-        className: 'generate-btn',
-        textContent: 'Сгенерировать прописи'
+    // === БЛОК ВЫБОРА СИМВОЛОВ (интегрирован в настройки) ===
+    const selectionBlock = createElement('div', {
+        className: 'symbol-selection-block',
+        style: 'margin: 20px 0; padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;'
     });
     
-    settingsContainer.appendChild(generateBtn);
-    settings.appendChild(settingsContainer);
-    
-    // Устанавливаем начальные значения
-    hintsCheckbox.checked = PROPISI_KANA_SETTINGS.showHints;
-    sampleCheckbox.checked = PROPISI_KANA_SETTINGS.showSample;
-    
-    // Обработчики событий
-    kanaSelect.addEventListener('change', function() {
-        PROPISI_KANA_SETTINGS.selectedSymbols = [];
-        PROPISI_KANA_SETTINGS.kanaType = this.value;
-        
-        if (document.querySelector('.kana-keyboard')) {
-            createCompactHorizontalKeyboard();
-        }
-    });
-    
-    hintsCheckbox.addEventListener('change', function() {
-        PROPISI_KANA_SETTINGS.showHints = this.checked;
-        updatePropisiKana();
-    });
-    
-    sampleCheckbox.addEventListener('change', function() {
-        PROPISI_KANA_SETTINGS.showSample = this.checked;
-        updatePropisiKana();
-    });
-    
-    rowsSelect.addEventListener('change', function() {
-        PROPISI_KANA_SETTINGS.rows = parseInt(this.value);
-        updatePropisiKana();
-    });
-    
-    columnsSelect.addEventListener('change', function() {
-        PROPISI_KANA_SETTINGS.columns = parseInt(this.value);
-        updatePropisiKana();
-    });
-    
-    generateBtn.addEventListener('click', updatePropisiKana);
-    
-    // Первоначальная генерация
-    setTimeout(() => {
-        createSymbolSelectionSection();
-        updatePropisiKana();
-    }, 100);
-}
-
-/**
- * Секция выбора символов с компактным дизайном
- */
-function createSymbolSelectionSection() {
-    const content = document.querySelector('.content');
-    clear_content(content);
-    
-    const selectionContainer = createElement('div', {
-        className: 'symbol-selection compact-selection'
-    });
-    
-    // Заголовок и кнопки управления
+    // Заголовок блока выбора
     const selectionHeader = createElement('div', {
-        className: 'selection-header'
+        className: 'selection-header',
+        style: 'margin-bottom: 15px;'
     });
     
     const selectionTitle = createElement('h4', {
+        style: 'margin: 0; color: #2d3748; font-size: 16px;',
         textContent: 'Выберите символы для прописей:'
     });
     
     const selectionControls = createElement('div', {
-        className: 'selection-controls'
+        className: 'selection-controls',
+        style: 'display: flex; gap: 10px; align-items: center; margin-top: 10px;'
     });
     
     const selectAllBtn = createElement('button', {
         className: 'control-btn select-all',
-        textContent: 'Выбрать все'
+        textContent: 'Выбрать все',
+        style: 'padding: 6px 12px; background: #4299e1; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;'
     });
     
     const deselectAllBtn = createElement('button', {
         className: 'control-btn deselect-all',
-        textContent: 'Снять все'
+        textContent: 'Снять все',
+        style: 'padding: 6px 12px; background: #e53e3e; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;'
     });
     
     const selectedCount = createElement('span', {
         className: 'selected-count',
-        textContent: `Выбрано: ${PROPISI_KANA_SETTINGS.selectedSymbols.length}`
+        textContent: `Выбрано: ${PROPISI_KANA_SETTINGS.selectedSymbols.length}`,
+        style: 'font-size: 14px; color: #2d3748; background: white; padding: 6px 12px; border-radius: 4px; border: 1px solid #e2e8f0;'
     });
     
     selectionControls.appendChild(selectAllBtn);
@@ -409,222 +430,397 @@ function createSymbolSelectionSection() {
     
     selectionHeader.appendChild(selectionTitle);
     selectionHeader.appendChild(selectionControls);
-    selectionContainer.appendChild(selectionHeader);
+    
+    // Информация о выборе
+    const selectionInfo = createElement('p', {
+        style: 'font-size: 13px; color: #718096; margin: 10px 0; font-style: italic;',
+        textContent: 'Кликните по символам для выбора/отмены выбора'
+    });
     
     // Клавиатура каны
-    const keyboardContainer = createElement('div', {
-        className: 'kana-keyboard-container compact-keyboard'
-    });
-    
     const keyboard = createElement('div', {
-        className: 'kana-keyboard',
-        id: 'kana-keyboard'
+        className: 'kana-keyboard compact-keyboard compact-kana-grid kana-rows-container',
+        id: 'kana-keyboard',
+        style: 'margin-top: 15px; padding: 10px; background: white; border-radius: 6px; border: 1px solid #e2e8f0;'
     });
     
-    keyboardContainer.appendChild(keyboard);
-    selectionContainer.appendChild(keyboardContainer);
+    selectionBlock.appendChild(selectionHeader);
+    selectionBlock.appendChild(keyboard);
+    selectionBlock.appendChild(selectionInfo);
+    settingsContainer.appendChild(selectionBlock);
+    // === КОНЕЦ БЛОКА ВЫБОРА СИМВОЛОВ ===
     
-    content.appendChild(selectionContainer);
+    // Кнопка генерации
+    const generateBtn = createElement('button', {
+        id: 'propisi-kana-generate-btn',
+        className: 'generate-btn',
+        textContent: 'Сгенерировать прописи',
+        style: 'width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px;'
+    });
     
-    // Обработчики кнопок
+    settingsContainer.appendChild(generateBtn);
+    settings.appendChild(settingsContainer);
+    
+    // Обработчики событий
+    kanaSelect.addEventListener('change', function() {
+        PROPISI_KANA_SETTINGS.kanaType = this.value;
+        PROPISI_KANA_SETTINGS.selectedSymbols = [];
+        
+        // Обновляем клавиатуру
+        createCompactHorizontalKeyboard();
+        updateSelectedCount();
+    });
+    
+    hintsCheckbox.addEventListener('change', function() {
+        PROPISI_KANA_SETTINGS.showHints = this.checked;
+    });
+    
+    sampleCheckbox.addEventListener('change', function() {
+        PROPISI_KANA_SETTINGS.showSample = this.checked;
+    });
+    
+    rowsSelect.addEventListener('change', function() {
+        PROPISI_KANA_SETTINGS.rows = parseInt(this.value);
+    });
+    
+    columnsSelect.addEventListener('change', function() {
+        PROPISI_KANA_SETTINGS.columns = parseInt(this.value);
+    });
+    
     selectAllBtn.addEventListener('click', function() {
         selectAllSymbols();
         updateSelectedCount();
-        updatePropisiKana();
     });
     
     deselectAllBtn.addEventListener('click', function() {
         deselectAllSymbols();
         updateSelectedCount();
+    });
+    
+    generateBtn.addEventListener('click', function() {
+        // Сохраняем настройки
+        saveSettings('propisi_kana', {
+            kanaType: PROPISI_KANA_SETTINGS.kanaType,
+            rows: PROPISI_KANA_SETTINGS.rows,
+            columns: PROPISI_KANA_SETTINGS.columns,
+            showHints: PROPISI_KANA_SETTINGS.showHints,
+            showSample: PROPISI_KANA_SETTINGS.showSample,
+            selectedSymbols: PROPISI_KANA_SETTINGS.selectedSymbols
+        });
+        
         updatePropisiKana();
     });
     
-    // Генерируем клавиатуру
-    createCompactHorizontalKeyboard();
+    // Загружаем сохраненные настройки
+    const savedSettings = getSettings('propisi_kana');
+    if (savedSettings) {
+        Object.assign(PROPISI_KANA_SETTINGS, savedSettings);
+    }
+    
+    // Первоначальная генерация клавиатуры
+    setTimeout(() => {
+        createCompactHorizontalKeyboard();
+    }, 100);
 }
 
 /**
- * Генерация компактной таблицы для практики
+ * Генерация таблицы для практики письма
+ * ОТДЕЛЬНАЯ ТАБЛИЦА НА КАЖДЫЙ СИМВОЛ
  */
 function generateCompactPracticeTable() {
-    const tableContainer = document.getElementById('propisi-table-container');
-    if (!tableContainer) return;
-    
-    clear_content(tableContainer);
+    const content = document.querySelector('.content');
+    clear_content(content);
     
     // Получаем текущие настройки
     const kanaType = PROPISI_KANA_SETTINGS.kanaType;
     const rows = PROPISI_KANA_SETTINGS.rows;
     const columns = PROPISI_KANA_SETTINGS.columns;
-    const showHints = PROPISI_KANA_SETTINGS.showHints;
-    const showSample = PROPISI_KANA_SETTINGS.showSample;
+    const selectedSymbols = PROPISI_KANA_SETTINGS.selectedSymbols;
     
     // Проверяем, есть ли выбранные символы
-    if (PROPISI_KANA_SETTINGS.selectedSymbols.length === 0) {
+    if (selectedSymbols.length === 0) {
         const message = createElement('div', {
             className: 'no-symbols-message',
-            textContent: 'Выберите хотя бы один символ на клавиатуре выше'
+            style: 'text-align: center; padding: 40px; color: #4a5568; font-size: 16px; background: #f7fafc; border-radius: 10px; border: 2px dashed #cbd5e0;',
+            textContent: 'Выберите хотя бы один символ в настройках выше и нажмите "Сгенерировать прописи"'
         });
-        tableContainer.appendChild(message);
+        content.appendChild(message);
         return;
     }
     
-    // Создаем таблицу
-    const table = createElement('table', {
-        className: 'compact-practice-table'
+    // Создаем контейнер для всех таблиц
+    const tablesContainer = createElement('div', {
+        className: 'propisi-tables-container',
+        style: 'display: flex; flex-direction: column; gap: 30px;'
     });
     
-    const tbody = createElement('tbody');
-    
-    // Получаем список символов для отображения
-    const symbols = [...PROPISI_KANA_SETTINGS.selectedSymbols];
-    let symbolIndex = 0;
-    const totalSymbols = symbols.length;
-    
-    // Генерируем строки
-    for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
-        const row = createElement('tr', {
-            className: 'practice-row'
+    // Для каждого выбранного символа создаем отдельную таблицу
+    selectedSymbols.forEach((symbol, symbolIndex) => {
+        // Создаем таблицу для текущего символа
+        const tableSection = createElement('div', {
+            className: 'propisi-table-section',
+            style: 'background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);'
         });
         
-        for (let colIndex = 0; colIndex < columns; colIndex++) {
-            const cell = createElement('td', {
-                className: 'practice-cell'
+        // Заголовок таблицы с символом
+        const tableHeader = createElement('div', {
+            style: 'margin-bottom: 15px; text-align: center;'
+        });
+        
+        const symbolTitle = createElement('h3', {
+            style: 'margin: 0; color: #2d3748; font-size: 24px;',
+            textContent: `Символ: ${symbol}`
+        });
+        
+        // Транскрипция
+        const transcription = getTranscriptionForSymbol(symbol, kanaType);
+        const transcriptionText = createElement('p', {
+            style: 'margin: 5px 0 0 0; color: #718096; font-size: 14px;',
+            textContent: `Транскрипция: ${transcription.ru}`
+        });
+        
+        tableHeader.appendChild(symbolTitle);
+        tableHeader.appendChild(transcriptionText);
+        tableSection.appendChild(tableHeader);
+        
+        // Создаем таблицу для практики письма
+        const tableContainer = createElement('div', {
+            className: 'propisi-table-container',
+            style: 'overflow-x: auto; margin-bottom: 10px;'
+        });
+        
+        const table = createElement('table', {
+            className: 'propisi-practice-table',
+            style: 'table-layout: fixed; width: 100%; border-collapse: collapse; margin: 0 auto; border: 2px solid #2d3748; background: white;'
+        });
+        
+        const tbody = createElement('tbody');
+        
+        // Генерация таблицы для одного символа
+        for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+            const row = createElement('tr', {
+                className: 'propisi-practice-row',
+                style: 'height: 80px;'
             });
             
-            // Определяем тип ячейки
-            const isHintCell = colIndex >= columns - 2;
-            const isSampleCell = !isHintCell && showSample;
-            
-            if (isHintCell && showHints) {
-                // Ячейки для подсказок
-                if (rowIndex === 0) {
-                    const svgPath = getSvgPathForSymbol(symbols[symbolIndex % totalSymbols], kanaType);
-                    if (svgPath) {
-                        const svgImg = createElement('img', {
-                            src: svgPath,
-                            alt: 'Подсказка',
-                            className: 'hint-img'
-                        });
-                        cell.appendChild(svgImg);
-                    }
-                } else if (rowIndex === 1) {
-                    const symbol = symbols[symbolIndex % totalSymbols];
-                    const symbolDiv = createElement('div', {
-                        className: 'hint-symbol',
-                        textContent: symbol
-                    });
-                    cell.appendChild(symbolDiv);
-                } else {
-                    cell.classList.add('empty-practice-cell');
-                }
+            for (let colIndex = 0; colIndex < columns; colIndex++) {
+                const cell = createElement('td', {
+                    className: 'propisi-practice-cell',
+                    style: 'width: 80px; height: 80px; border: 2px solid #000; text-align: center; vertical-align: middle; position: relative; padding: 5px;'
+                });
                 
-                if (rowIndex < 2) {
-                    symbolIndex++;
-                }
-            } else {
-                // Обычные ячейки
-                if (rowIndex === 0 && isSampleCell) {
-                    const symbol = symbols[symbolIndex % totalSymbols];
-                    const sampleDiv = createElement('div', {
-                        className: 'sample-symbol',
-                        textContent: symbol
+                if (rowIndex === 0) {
+                    // Первая строка
+                    if (colIndex === 0) {
+                        // Первая ячейка - темный символ (образец)
+                        const darkSymbol = createElement('div', {
+                            className: 'dark-symbol',
+                            textContent: symbol,
+                            style: 'color: #000; font-size: 36px; font-weight: bold; font-family: "MS Mincho", "SimSun", serif;'
+                        });
+                        cell.appendChild(darkSymbol);
+                        cell.style.backgroundColor = '#f0f9ff'; // Светло-голубой фон для образца
+                    } else {
+                        // Остальные ячейки - бледные символы
+                        const paleSymbol = createElement('div', {
+                            className: 'pale-symbol',
+                            textContent: symbol,
+                            style: 'color: #cbd5e0; font-size: 36px; font-weight: bold; font-family: "MS Mincho", "SimSun", serif;'
+                        });
+                        cell.appendChild(paleSymbol);
+                    }
+                    
+                } else if (rowIndex === 1) {
+                    // Вторая строка - все бледные символы
+                    const paleSymbol = createElement('div', {
+                        className: 'pale-symbol',
+                        textContent: symbol,
+                        style: 'color: #cbd5e0; font-size: 36px; font-weight: bold; font-family: "MS Mincho", "SimSun", serif;'
                     });
-                    cell.appendChild(sampleDiv);
-                    symbolIndex++;
-                } else if (rowIndex === 1 && isSampleCell) {
-                    const symbol = symbols[(symbolIndex - 2) % totalSymbols];
-                    const traceDiv = createElement('div', {
-                        className: 'trace-symbol',
-                        textContent: symbol
-                    });
-                    cell.appendChild(traceDiv);
+                    cell.appendChild(paleSymbol);
+                    
                 } else {
-                    cell.classList.add('empty-practice-cell');
+                    // Все остальные строки: пустые ячейки для практики
+                    cell.style.backgroundColor = '#f8fafc';
                     
                     // Добавляем направляющие линии
                     const guideHorizontal = createElement('div', {
-                        className: 'guide-line horizontal'
+                        className: 'guide-line horizontal',
+                        style: 'position: absolute; top: 50%; left: 5px; right: 5px; height: 1px; background: rgba(0, 0, 0, 0.15); transform: translateY(-50%);'
                     });
+                    
                     const guideVertical = createElement('div', {
-                        className: 'guide-line vertical'
+                        className: 'guide-line vertical',
+                        style: 'position: absolute; left: 50%; top: 5px; bottom: 5px; width: 1px; background: rgba(0, 0, 0, 0.15); transform: translateX(-50%);'
                     });
+                    
                     cell.appendChild(guideHorizontal);
                     cell.appendChild(guideVertical);
                 }
+                
+                row.appendChild(cell);
             }
             
-            row.appendChild(cell);
+            tbody.appendChild(row);
         }
         
-        tbody.appendChild(row);
-    }
-    
-    table.appendChild(tbody);
-    tableContainer.appendChild(table);
-    
-    // Добавляем инструкцию
-    const instructions = createElement('div', {
-        className: 'compact-instructions'
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+        tableSection.appendChild(tableContainer);
+        
+        // Добавляем легенду только для первой таблицы
+        if (symbolIndex === 0) {
+            const legend = createElement('div', {
+                className: 'practice-legend',
+                style: 'margin: 15px 0; padding: 15px; background: #f7fafc; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; color: #4a5568;'
+            });
+            
+            const legendContent = createElement('div', {
+                style: 'display: flex; flex-direction: column; gap: 10px;'
+            });
+            
+            // Темный символ
+            const darkLegend = createElement('div', {
+                style: 'display: flex; align-items: center; gap: 10px;'
+            });
+            
+            const darkExample = createElement('div', {
+                style: 'width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #000; font-weight: bold; border: 2px solid #000; background: #f0f9ff;'
+            });
+            
+            darkExample.textContent = symbol;
+            
+            const darkText = createElement('span', {
+                textContent: '— Образец для изучения'
+            });
+            
+            darkLegend.appendChild(darkExample);
+            darkLegend.appendChild(darkText);
+            
+            // Бледный символ
+            const paleLegend = createElement('div', {
+                style: 'display: flex; align-items: center; gap: 10px;'
+            });
+            
+            const paleExample = createElement('div', {
+                style: 'width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #cbd5e0; font-weight: bold; border: 2px solid #000;'
+            });
+            
+            paleExample.textContent = symbol;
+            
+            const paleText = createElement('span', {
+                textContent: '— Для обводки и тренировки'
+            });
+            
+            paleLegend.appendChild(paleExample);
+            paleLegend.appendChild(paleText);
+            
+            // Пустая ячейка
+            const emptyLegend = createElement('div', {
+                style: 'display: flex; align-items: center; gap: 10px;'
+            });
+            
+            const emptyExample = createElement('div', {
+                style: 'width: 40px; height: 40px; background: #f8fafc; border: 2px solid #000; position: relative;'
+            });
+            
+            // Добавляем крестик в примере
+            const emptyCross1 = createElement('div', {
+                style: 'position: absolute; top: 50%; left: 5px; right: 5px; height: 1px; background: rgba(0, 0, 0, 0.15); transform: translateY(-50%);'
+            });
+            
+            const emptyCross2 = createElement('div', {
+                style: 'position: absolute; left: 50%; top: 5px; bottom: 5px; width: 1px; background: rgba(0, 0, 0, 0.15); transform: translateX(-50%);'
+            });
+            
+            emptyExample.appendChild(emptyCross1);
+            emptyExample.appendChild(emptyCross2);
+            
+            const emptyText = createElement('span', {
+                textContent: '— Для самостоятельного письма'
+            });
+            
+            emptyLegend.appendChild(emptyExample);
+            emptyLegend.appendChild(emptyText);
+            
+            legendContent.appendChild(darkLegend);
+            legendContent.appendChild(paleLegend);
+            legendContent.appendChild(emptyLegend);
+            legend.appendChild(legendContent);
+            tableSection.appendChild(legend);
+        }
+        
+        // Добавляем разделитель между таблицами (кроме последней)
+        if (symbolIndex < selectedSymbols.length - 1) {
+            const separator = createElement('div', {
+                style: 'height: 1px; background: #e2e8f0; margin: 20px 0;'
+            });
+            tableSection.appendChild(separator);
+        }
+        
+        tablesContainer.appendChild(tableSection);
     });
     
-    instructions.innerHTML = `
-        <h5>Инструкция:</h5>
-        <ul>
-            <li><strong>1 строка</strong>: Образцы + SVG-подсказки</li>
-            <li><strong>2 строка</strong>: Обводка + символы</li>
-            <li><strong>Остальные</strong>: Практика письма</li>
-        </ul>
-    `;
+    // Добавляем общую инструкцию
+    const instructions = createElement('div', {
+        className: 'practice-instructions',
+        style: 'margin: 15px 0; padding: 15px; background: #e6fffa; border-radius: 8px; border: 1px solid #81e6d9; color: #234e52;'
+    });
     
-    tableContainer.appendChild(instructions);
+    const instructionsTitle = createElement('h5', {
+        style: 'margin: 0 0 10px 0; color: #234e52; font-size: 16px;',
+        textContent: 'Как использовать прописи:'
+    });
+    
+    const instructionsList = createElement('ol', {
+        style: 'margin: 0; padding-left: 20px;'
+    });
+    
+    const steps = [
+        'Изучите образец (черный символ в левом верхнем углу)',
+        'Потренируйтесь обводить бледные символы',
+        'В пустых ячейках напишите символ самостоятельно',
+        'Повторяйте до уверенного написания каждого символа'
+    ];
+    
+    steps.forEach(step => {
+        const li = createElement('li', {
+            style: 'margin-bottom: 5px;',
+            textContent: step
+        });
+        instructionsList.appendChild(li);
+    });
+    
+    const tip = createElement('div', {
+        style: 'margin-top: 10px; font-style: italic;',
+        textContent: 'Совет: Распечатайте таблицу и используйте ручку или карандаш для практики'
+    });
+    
+    instructions.appendChild(instructionsTitle);
+    instructions.appendChild(instructionsList);
+    instructions.appendChild(tip);
+    
+    // Добавляем все в content
+    content.appendChild(tablesContainer);
+    content.appendChild(instructions);
+    
+    // Добавляем кнопку для возврата к настройкам
+    const backToSettingsBtn = createElement('button', {
+        style: 'margin-top: 20px; padding: 10px 20px; background: #4299e1; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%;',
+        textContent: 'Вернуться к настройкам'
+    });
+    
+    backToSettingsBtn.addEventListener('click', function() {
+        settings_propisi_kana();
+    });
+    
+    content.appendChild(backToSettingsBtn);
 }
 
 /**
- * Обновленная функция генерации прописей с компактным режимом
+ * Обновленная функция генерации прописей
  */
 function updatePropisiKana() {
-    const practiceSection = document.querySelector('.propisi-practice-section');
-    if (!practiceSection) {
-        createPracticeSection();
-    } else {
-        generateCompactPracticeTable();
-    }
-}
-
-/**
- * Создание секции для практики с компактным дизайном
- */
-function createPracticeSection() {
-    const content = document.querySelector('.content');
-    const practiceSection = createElement('div', {
-        className: 'propisi-practice-section compact-practice'
-    });
-    
-    const infoPanel = createElement('div', {
-        className: 'info-panel'
-    });
-    
-    const infoTitle = createElement('h4', {
-        textContent: 'Практика письма'
-    });
-    
-    const infoText = createElement('p', {
-        textContent: 'Используйте таблицу ниже для практики написания символов.'
-    });
-    
-    infoPanel.appendChild(infoTitle);
-    infoPanel.appendChild(infoText);
-    practiceSection.appendChild(infoPanel);
-    
-    const tableContainer = createElement('div', {
-        className: 'propisi-table-container',
-        id: 'propisi-table-container'
-    });
-    
-    practiceSection.appendChild(tableContainer);
-    content.appendChild(practiceSection);
-    
     generateCompactPracticeTable();
 }
 
@@ -638,4 +834,7 @@ if (typeof window !== 'undefined') {
     window.settings_propisi_kana = settings_propisi_kana;
     window.generator_propisi_kana = generator_propisi_kana;
     window.updatePropisiKana = updatePropisiKana;
+    window.createCompactHorizontalKeyboard = createCompactHorizontalKeyboard;
+    window.selectAllSymbols = selectAllSymbols;
+    window.deselectAllSymbols = deselectAllSymbols;
 }

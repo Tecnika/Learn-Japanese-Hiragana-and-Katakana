@@ -1,4 +1,4 @@
-// settings.js - исправленная версия
+// settings.js - исправленная версия с очисткой content
 window.onload = function () {
     console.log('=== Запуск приложения ===');
     console.log('Загружаемые модули:', window.APP_STATE);
@@ -56,6 +56,12 @@ function initNavigation() {
         
         event.preventDefault();
         
+        // Очищаем content блок при выборе любого инструмента
+        const content = document.querySelector('.content');
+        if (content) {
+            clear_content(content);
+        }
+        
         switch(button.id) {
             case 'table_btn':
                 console.log('Нажата кнопка "Таблица"');
@@ -84,6 +90,12 @@ function initNavigation() {
                     generator_propisi_kana: typeof generator_propisi_kana,
                     window: Object.keys(window).filter(k => k.includes('propisi'))
                 });
+                
+                // Очищаем setting блок
+                const setting = document.querySelector('.setting');
+                if (setting) {
+                    clear_content(setting);
+                }
                 
                 if (typeof settings_propisi_kana === 'function') {
                     settings_propisi_kana();
@@ -114,6 +126,12 @@ function initNavigation() {
                 
             case 'read_btn':
                 console.log('Нажата кнопка "Чтение"');
+                // Очищаем оба блока
+                const settingRead = document.querySelector('.setting');
+                const contentRead = document.querySelector('.content');
+                if (settingRead) clear_content(settingRead);
+                if (contentRead) clear_content(contentRead);
+                
                 showSimpleMessage('Раздел "Чтение" находится в разработке');
                 break;
                 
@@ -151,8 +169,11 @@ function createSimpleStartPage() {
     const content = document.querySelector('.content');
     const setting = document.querySelector('.setting');
     
+    // Очищаем оба блока
+    if (content) clear_content(content);
+    if (setting) clear_content(setting);
+    
     if (content) {
-        clear_content(content);
         const welcomeDiv = document.createElement('div');
         welcomeDiv.style.cssText = 'text-align: center; padding: 40px;';
         welcomeDiv.innerHTML = `
@@ -165,8 +186,6 @@ function createSimpleStartPage() {
         `;
         content.appendChild(welcomeDiv);
     }
-    
-    if (setting) clear_content(setting);
 }
 
 // Экспортируем функции

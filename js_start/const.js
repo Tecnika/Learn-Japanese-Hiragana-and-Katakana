@@ -61,6 +61,15 @@ const DEFAULT_SETTINGS = {
         includeForeign: false,
         kanaType: 'hiragana+katakana',
         category: 'extended'
+    },
+    propisi_kana: {
+        kanaType: 'hiragana',
+        rows: 5,
+        columns: 5,
+        showHints: true,
+        showSample: true,
+        selectedSymbols: [],
+        tableMode: 'compact'
     }
 };
 
