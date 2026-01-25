@@ -1,0 +1,287 @@
+/* style/menu.css - Стили для меню навигации */
+
+/* ============================
+   ОСНОВНЫЕ СТИЛИ МЕНЮ
+   ============================ */
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.button {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 3px;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #4299e1, #3182ce);
+    color: white;
+    min-width: 140px;
+    max-width: 200px;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    line-height: 1.3;
+    height: auto;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+}
+
+/* Особые стили для кнопки с самым длинным текстом */
+#propisi_for_memoring_btn {
+    font-size: 13px;
+    padding: 10px 6px;
+    line-height: 1.2;
+    word-spacing: -0.5px;
+}
+
+/* Эффекты при наведении */
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
+}
+
+.button:active {
+    transform: translateY(-1px);
+}
+
+/* Анимация при наведении */
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.button:hover::before {
+    left: 100%;
+}
+
+/* Контент кнопки поверх анимации */
+.button span {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================
+   ДЕСКТОПНЫЕ УСТРОЙСТВА (планшеты и выше)
+   ============================ */
+@media (min-width: 768px) {
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .button {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        font-size: 14px;
+        padding: 14px 10px;
+        min-height: 55px;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 13px;
+        padding: 12px 8px;
+    }
+}
+
+/* ============================
+   ПЛАНШЕТЫ (вертикальная ориентация)
+   ============================ */
+@media (max-width: 767px) and (min-width: 481px) {
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+    
+    .button {
+        font-size: 13px;
+        padding: 10px 6px;
+        min-height: 45px;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+}
+
+/* ============================
+   МОБИЛЬНЫЕ УСТРОЙСТВА
+   ============================ */
+@media (max-width: 480px) {
+    .menu {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .button {
+        font-size: 14px;
+        padding: 12px 8px;
+        min-height: 45px;
+        max-width: none;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 13px;
+        padding: 10px 6px;
+    }
+}
+
+/* ============================
+   ЛАНДШАФТНАЯ ОРИЕНТАЦИЯ НА МОБИЛЬНЫХ
+   ============================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .menu {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .button {
+        min-height: 40px;
+        padding: 8px 4px;
+        font-size: 12px;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 11px;
+        padding: 6px 3px;
+    }
+}
+
+/* ============================
+   БОЛЬШИЕ ЭКРАНЫ (Full HD и выше)
+   ============================ */
+@media (min-width: 1200px) {
+    .menu {
+        padding: 25px;
+    }
+    
+    .button {
+        font-size: 15px;
+        padding: 16px 12px;
+        min-height: 60px;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 14px;
+        padding: 14px 10px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .menu {
+        padding: 30px;
+    }
+    
+    .button {
+        font-size: 16px;
+        padding: 18px 14px;
+        min-height: 65px;
+    }
+    
+    #propisi_for_memoring_btn {
+        font-size: 15px;
+        padding: 16px 12px;
+    }
+}
+
+/* ============================
+   ПОДСВЕТКА АКТИВНОЙ КНОПКИ
+   ============================ */
+.button.active {
+    background: linear-gradient(145deg, #2c5282, #2b6cb0);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+/* ============================
+   АНИМАЦИЯ ПОЯВЛЕНИЯ КНОПОК
+   ============================ */
+@keyframes buttonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.button {
+    animation: buttonAppear 0.3s ease forwards;
+    opacity: 0;
+}
+
+#table_btn { animation-delay: 0.1s; }
+#propisi_for_memoring_btn { animation-delay: 0.2s; }
+#propisi_kana_btn { animation-delay: 0.3s; }
+#read_btn { animation-delay: 0.4s; }
+
+/* ============================
+   КНОПКИ В СОСТОЯНИИ DISABLED
+   ============================ */
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(145deg, #a0aec0, #718096);
+    transform: none !important;
+}
+
+.button:disabled:hover {
+    transform: none !important;
+    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2) !important;
+}
+
+/* ============================
+   ФОКУС ДЛЯ ДОСТУПНОСТИ
+   ============================ */
+.button:focus {
+    outline: 3px solid rgba(66, 153, 225, 0.5);
+    outline-offset: 2px;
+}
+
+.button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ============================
+   ПЕЧАТЬ
+   ============================ */
+@media print {
+    .menu {
+        display: none !important;
+    }
+}

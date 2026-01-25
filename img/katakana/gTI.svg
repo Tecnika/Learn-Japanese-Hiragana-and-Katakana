@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.0"
+   width="41.811581"
+   height="47.117992"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="Table_katakana-ru.svg"
+   inkscape:export-batch-name=""
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadataKatakana">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="1031"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="1.2008624"
+     inkscape:cx="341.14809"
+     inkscape:cy="169.85181"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     showgrid="false"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="41.811581"
+       height="47.117992"
+       id="page1"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <!-- arrow ends -->
+  <defs
+     id="defsKatakana">
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       style="overflow:visible"
+       id="Arrow1Mend">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         class="arrow"
+         id="path3362"
+         style="stroke:#0000ff" />
+    </marker>
+  </defs>
+  <style
+     type="text/css"
+     id="style3544">
+		path.stroke /* arrow lines */
+		{
+			fill: none; fill-opacity: 0.75; fill-rule: evenodd;
+			stroke: blue; stroke-width: 1px; stroke-linecap: butt; stroke-linejoin: miter; stroke-opacity:1;
+			marker-end: url(#Arrow1Mend);
+		}
+		path.arrow /* heads */
+		{
+			font-size: 12px;
+			fill-rule: evenodd;
+			fill: blue;
+			stroke: blue; stroke-width: 1pt;/*0.625*/ stroke-linejoin: round;
+			marker-start: none;
+		}
+		text.number
+		{
+			font-size: 8px;
+			fill: blue;
+		}
+		text.label
+		{
+			font-size: 22px;
+		}
+		text.cell
+		{
+			font-style: italic;
+			text-transform: lowercase;
+			fill: gray;
+/*			display: none;*/
+		}
+		path.old
+		{
+			fill: gray;
+		}
+		path.rule
+		{
+			fill: none; fill-opacity: 0.75; fill-rule: evenodd;
+			stroke: black; stroke-width: 1px; stroke-linecap: butt; stroke-linejoin: miter; stroke-opacity: 0.1;
+		}
+		path.rule[id*=&quot;V&quot;]
+		{
+			stroke-opacity: 0;
+			}
+		path#ruleH1, path#ruleV12
+		{
+			stroke-opacity: 0.8;
+		}
+		defs marker
+		{
+			overflow: visible;
+		}
+	</style>
+  <!-- table rules -->
+  <!-- glyphs -->
+  <!-- -A -->
+  <!-- -I -->
+  <g
+     id="gTI"
+     transform="translate(-475.86267,-131.03087)">
+    <path
+       id="path2159"
+       d="m 477.17425,155.27386 h 19.03125 v -6.65626 c -2e-5,-0.65622 -0.0938,-1.21872 -0.28125,-1.6875 l -0.0469,-0.0937 c -3.28126,0.68752 -7.46876,1.43752 -12.5625,2.25 -0.40625,-1.65623 -0.9375,-2.9531 -1.59375,-3.89063 l 0.0937,-0.51563 c 4.62499,-0.21871 8.54686,-0.65621 11.76563,-1.3125 3.24998,-0.65621 6.1406,-1.42184 8.67187,-2.29687 2.53122,-0.90621 3.8281,-1.49996 3.89063,-1.78125 0.28122,-0.46871 0.60934,-0.49996 0.98437,-0.0937 l 2.29688,3.32813 c 0.43746,0.50003 0.34371,0.78128 -0.28125,0.84374 h -0.9375 c -3.53128,1.25004 -6.7344,2.21879 -9.60938,2.90626 l 2.34375,0.0937 c 0.43748,0.12503 0.49998,0.40628 0.1875,0.84376 l -0.46875,0.79687 v 7.26563 h 17.01563 v 4.17187 H 500.518 c -0.15628,2.15626 -0.51565,4.32814 -1.07813,6.51563 -0.56252,2.15625 -1.76564,4.29688 -3.60937,6.42187 -1.84377,2.125 -4.92189,4.04687 -9.23438,5.76563 -0.53126,-1.50001 -1.32813,-2.76563 -2.39062,-3.79688 v -0.51562 c 3.37499,-0.84375 5.92186,-2 7.64062,-3.46876 1.74999,-1.49999 2.85936,-3.18749 3.32813,-5.0625 0.46873,-1.90623 0.78123,-3.85936 0.9375,-5.85937 h -18.9375 v -4.17187" />
+    <path
+       id="path35366"
+       d="m 503.91827,136.69117 c -5.40755,2.85577 -13.35208,3.61742 -20.45252,4.72508"
+       class="stroke" />
+    <text
+       x="493.23999"
+       y="136.86681"
+       class="number"
+       id="text3733"
+       style="line-height:0%">1</text>
+    <path
+       id="path36289"
+       d="m 477.89313,152.09027 h 14.36468"
+       class="stroke" />
+    <text
+       x="475.23376"
+       y="150.00021"
+       class="number"
+       id="text3736"
+       style="line-height:0%">2</text>
+    <path
+       id="path37210"
+       d="m 504.19088,160.9416 c 1.21938,8.20143 -3.12645,10.97083 -6.48634,14.3968"
+       class="stroke" />
+    <text
+       x="506.87769"
+       y="171.65132"
+       class="number"
+       id="text3739"
+       style="line-height:0%">3</text>
+  </g>
+  <!-- -U -->
+  <!-- -E -->
+  <!-- -O -->
+  <!-- column headers -->
+  <!-- row headers -->
+</svg>

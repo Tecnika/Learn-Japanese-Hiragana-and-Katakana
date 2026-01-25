@@ -1,0 +1,932 @@
+/* style/propisi_kana.css - Обновленные стили с темным текстом и вертикальной клавиатурой */
+
+/* ===== НАСТРОЙКИ ===== */
+.propisi-kana-settings {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.propisi-kana-settings-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.propisi-kana-settings-title {
+    margin: 0 0 10px 0;
+    color: #2d3748 !important;
+    font-size: 22px;
+}
+
+.propisi-kana-settings-desc {
+    margin: 0;
+    color: #4a5568 !important;
+    font-size: 14px;
+}
+
+.propisi-kana-grid-settings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.propisi-kana-settings-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.propisi-kana-setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.propisi-kana-label {
+    color: #2d3748 !important;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.propisi-kana-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    color: #2d3748 !important;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.propisi-kana-select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.propisi-kana-checkbox {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.propisi-kana-checkbox + label {
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    color: #2d3748 !important;
+    line-height: 1.4;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Стили для опций в выпадающих списках */
+.propisi-kana-select option {
+    color: #2d3748 !important;
+    text-align: left;
+    padding: 8px;
+    background: white !important;
+}
+
+.propisi-kana-generate-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.propisi-kana-generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* ===== ВЕРТИКАЛЬНАЯ КЛАВИАТУРА КАНЫ ===== */
+.kana-keyboard-container {
+    margin-top: 10px;
+}
+
+.kana-keyboard {
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    overflow-x: auto;
+}
+
+/* Вертикальный контейнер */
+.kana-keyboard-vertical {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    transform-origin: center;
+    margin: -50px -30px; /* Компенсация для поворота */
+    padding: 50px 30px;
+}
+
+/* Столбец клавиатуры */
+.kana-keyboard-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 45px;
+}
+
+/* Заголовок столбца */
+.column-header {
+    font-size: 9px;
+    color: #718096 !important;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 5px;
+    padding: 2px 4px;
+    background: #edf2f7;
+    border-radius: 3px;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Кнопки символов */
+.kana-key {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'MS Mincho', 'SimSun', serif;
+    color: #2d3748 !important;
+    margin: 0;
+    padding: 0;
+}
+
+.kana-key:hover {
+    background: #edf2f7;
+    border-color: #a0aec0;
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.kana-key.selected {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white !important;
+    border-color: #3182ce;
+    box-shadow: 0 2px 6px rgba(66, 153, 225, 0.3);
+}
+
+.kana-key.selected:hover {
+    background: linear-gradient(135deg, #3182ce, #2c5282);
+    border-color: #2c5282;
+}
+
+/* ===== ВЫБОР СИМВОЛОВ ===== */
+.symbol-selection-container {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.symbol-selection-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2d3748 !important;
+    font-size: 18px;
+    text-align: left;
+}
+
+.selection-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.selection-btn {
+    padding: 8px 16px;
+    background: #4299e1;
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.selection-btn:hover {
+    background: #3182ce;
+    transform: translateY(-1px);
+}
+
+.deselect-all-btn {
+    background: #e53e3e;
+}
+
+.deselect-all-btn:hover {
+    background: #c53030;
+}
+
+.selected-count {
+    font-size: 14px;
+    color: #2d3748 !important;
+    font-weight: 500;
+    background: #f7fafc;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-left: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+/* ===== СЕКЦИЯ ПРАКТИКИ ===== */
+.propisi-practice-section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.propisi-info-panel {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.propisi-info-panel h3 {
+    margin-top: 0;
+    color: #2d3748 !important;
+    font-size: 20px;
+    text-align: left;
+}
+
+.propisi-info-panel p {
+    color: #4a5568 !important;
+    margin-bottom: 0;
+    text-align: left;
+    line-height: 1.5;
+}
+
+/* ===== ТАБЛИЦА ПРАКТИКИ ===== */
+.propisi-table-container {
+    overflow-x: auto;
+}
+
+.propisi-practice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    border: 2px solid #e2e8f0;
+    background: white;
+}
+
+.propisi-practice-row {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.propisi-practice-row:last-child {
+    border-bottom: none;
+}
+
+.propisi-practice-cell {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Содержимое ячеек */
+.sample-symbol,
+.trace-symbol,
+.hint-symbol {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: 'MS Mincho', 'SimSun', serif;
+    text-align: center;
+}
+
+.sample-symbol {
+    color: #1e40af !important;
+}
+
+.trace-symbol {
+    color: #93c5fd !important;
+    opacity: 0.5;
+}
+
+.hint-symbol {
+    color: #7c2d12 !important;
+}
+
+.hint-svg {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    display: block;
+    margin: 0 auto;
+}
+
+/* Пустые ячейки для практики */
+.practice-empty-cell {
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 0, 0, 0.02) 5px,
+        rgba(0, 0, 0, 0.02) 10px
+    );
+}
+
+/* Направляющие линии */
+.guide-line {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.guide-line.horizontal {
+    top: 50%;
+    left: 5px;
+    right: 5px;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.guide-line.vertical {
+    left: 50%;
+    top: 5px;
+    bottom: 5px;
+    width: 1px;
+    transform: translateX(-50%);
+}
+
+/* Сообщение при отсутствии символов */
+.no-symbols-message {
+    text-align: center;
+    padding: 40px;
+    color: #4a5568 !important;
+    font-size: 16px;
+    background: #f7fafc;
+    border-radius: 10px;
+    border: 2px dashed #cbd5e0;
+}
+
+/* ===== ИНСТРУКЦИЯ ===== */
+.propisi-instructions {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #dbeafe, #93c5fd);
+    border-radius: 10px;
+    color: #1e3a8a !important;
+}
+
+.propisi-instructions h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #1e3a8a !important;
+    font-size: 18px;
+    text-align: left;
+}
+
+.propisi-instructions ol {
+    margin: 0;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.propisi-instructions li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-size: 14px;
+    color: #1e3a8a !important;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .propisi-kana-grid-settings {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Вертикальная клавиатура для мобильных */
+    .kana-keyboard-vertical {
+        gap: 3px;
+        margin: -40px -20px;
+        padding: 40px 20px;
+    }
+    
+    .kana-keyboard-column {
+        min-width: 40px;
+    }
+    
+    .column-header {
+        font-size: 8px;
+        height: 50px;
+    }
+    
+    .kana-key {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .propisi-practice-cell {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .sample-symbol,
+    .trace-symbol,
+    .hint-symbol {
+        font-size: 24px;
+    }
+    
+    .hint-svg {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .propisi-instructions li {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .propisi-kana-settings {
+        padding: 15px;
+    }
+    
+    /* Еще более компактная клавиатура */
+    .kana-keyboard-vertical {
+        gap: 2px;
+        margin: -30px -15px;
+        padding: 30px 15px;
+    }
+    
+    .kana-keyboard-column {
+        min-width: 35px;
+    }
+    
+    .column-header {
+        font-size: 7px;
+        height: 40px;
+        padding: 1px 3px;
+    }
+    
+    .kana-key {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+    
+    .propisi-practice-cell {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .sample-symbol,
+    .trace-symbol,
+    .hint-symbol {
+        font-size: 20px;
+    }
+    
+    .hint-svg {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .selection-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .selected-count {
+        margin-left: 0;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 360px) {
+    .kana-keyboard-vertical {
+        gap: 1px;
+        margin: -25px -10px;
+        padding: 25px 10px;
+    }
+    
+    .kana-keyboard-column {
+        min-width: 30px;
+    }
+    
+    .column-header {
+        font-size: 6px;
+        height: 35px;
+    }
+    
+    .kana-key {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
+    
+    .propisi-practice-cell {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Специальные стили для ландшафтной ориентации */
+@media (max-width: 768px) and (orientation: landscape) {
+    .kana-keyboard-container {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    
+    .kana-keyboard-vertical {
+        transform: rotate(0deg);
+        margin: 0;
+        padding: 10px;
+        gap: 5px;
+    }
+    
+    .column-header {
+        writing-mode: horizontal-tb;
+        height: auto;
+        width: 60px;
+        margin-bottom: 2px;
+    }
+    
+    .kana-keyboard-column {
+        min-width: 60px;
+    }
+}
+
+/* Для десктопов - нормальная вертикальная ориентация */
+@media (min-width: 769px) {
+    .kana-keyboard-vertical {
+        margin: -50px -30px;
+        padding: 50px 30px;
+    }
+}
+/* Дополнительные стили для компактного режима */
+
+/* Компактные настройки */
+.propisi-kana-settings.compact-layout {
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    color: white;
+}
+
+.settings-header h3 {
+    color: white !important;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.settings-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.form-select {
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+}
+
+.checkboxes-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.generate-btn {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Компактная клавиатура */
+.compact-kana-grid {
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.kana-row {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+    align-items: center;
+}
+
+.row-number {
+    width: 20px;
+    font-size: 10px;
+    color: #718096;
+    text-align: center;
+    font-weight: bold;
+}
+
+.compact-key {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.compact-key:hover {
+    background: #edf2f7;
+}
+
+.compact-key.selected {
+    background: #4299e1;
+    color: white;
+    border-color: #3182ce;
+}
+
+.empty-cell {
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+}
+
+/* Компактный выбор символов */
+.compact-selection {
+    margin-top: 15px;
+}
+
+.selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.selection-header h4 {
+    margin: 0;
+    color: #2d3748;
+    font-size: 16px;
+}
+
+.control-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.control-btn.select-all {
+    background: #4299e1;
+    color: white;
+}
+
+.control-btn.deselect-all {
+    background: #e53e3e;
+    color: white;
+}
+
+/* Компактная таблица практики */
+.compact-practice-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e2e8f0;
+    background: white;
+    margin-top: 10px;
+}
+
+.practice-row {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.practice-cell {
+    width: 50px;
+    height: 50px;
+    border-right: 1px solid #e2e8f0;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+}
+
+.practice-cell:last-child {
+    border-right: none;
+}
+
+.empty-practice-cell {
+    background: #f8fafc;
+}
+
+.sample-symbol {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+.trace-symbol {
+    font-size: 20px;
+    color: #a0aec0;
+}
+
+.hint-symbol {
+    font-size: 18px;
+    color: #4a5568;
+}
+
+.hint-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* Направляющие линии */
+.guide-line {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.guide-line.horizontal {
+    top: 50%;
+    left: 5px;
+    right: 5px;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.guide-line.vertical {
+    left: 50%;
+    top: 5px;
+    bottom: 5px;
+    width: 1px;
+    transform: translateX(-50%);
+}
+
+/* Компактная инструкция */
+.compact-instructions {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f7fafc;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.compact-instructions h5 {
+    margin: 0 0 5px 0;
+    color: #2d3748;
+}
+
+.compact-instructions ul {
+    margin: 0;
+    padding-left: 15px;
+    color: #4a5568;
+}
+
+.compact-instructions li {
+    margin-bottom: 3px;
+    line-height: 1.4;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .settings-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .compact-key {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+    
+    .empty-cell {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .practice-cell {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .sample-symbol, .trace-symbol {
+        font-size: 16px;
+    }
+    
+    .hint-img {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .compact-key {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+    
+    .empty-cell {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .practice-cell {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .sample-symbol, .trace-symbol, .hint-symbol {
+        font-size: 14px;
+    }
+    
+    .hint-img {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .selection-header {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+}

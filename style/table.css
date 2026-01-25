@@ -190,6 +190,7 @@
 
 .kana-char {
     font-size: 24px !important;
+    color: #2d3748;
     font-weight: bold !important;
     margin-bottom: 5px !important;
     min-height: 30px !important;
@@ -198,6 +199,7 @@
 
 .kana-char-only {
     font-size: 28px !important;
+    color: #2d3748;
     font-weight: bold !important;
     min-height: 30px !important;
     display: block !important;

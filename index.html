@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="image/x-icon" href="./img/favicon.ico" rel="shortcut icon">
     <title>Learn Nihongo desu~</title>
-    <!-- <link rel="stylesheet" href="./style.css"> -->
-<script src="./const.js"></script>
-<script src="./settings.js"></script>
-<script src="./start.js"></script>
+    
+    <!-- 1. Все глобальные константы и данные -->
+    <script src="./js_start/const.js"></script>
+    
+    <!-- 2. Универсальные функции для всего проекта -->
+    <script src="./js_start/function.js"></script>
+    
+    <!-- 3. Настройки и инициализация -->
+    <script src="./js_start/settings.js"></script>
+    
+    <!-- 4. Стартовая страница -->
+    <script src="./js_start/start.js"></script>
 </head>
 
 <body>
     <div class="container">
         <div class="menu">
             <input class="button" id="table_btn" type="button" value="Таблица">
-            <!-- <input class="button" id="hiragana_btn" type="button" value="Хирагана"> -->
-            <!-- <input class="button" id="katakana_btn" type="button" value="Катакана"> -->
-            <input class="button" id="propisi_btn" type="button" value="Прописи">
+            <input class="button" id="propisi_for_memoring_btn" type="button" value="Прописи для запоминания">
+            <input class="button" id="propisi_kana_btn" type="button" value="Прописи каны">
             <input class="button" id="read_btn" type="button" value="Чтение">
         </div>
         <div class="setting"></div>
         <div class="content"></div>
     </div>
 </body>
-
 </html>
